@@ -36,13 +36,19 @@ const fetchVideos = function(searchTerm, callback) {
 const decorateResponse = function(response) {
   return response.items.map( item => {
     return {
-      id: item.id.videoId,
+      id: getId(item),
       title: item.snippet.title,
       thumbnail: item.snippet.thumbnails.default.url
     };
   });
 };
 
+function getId(item) {
+  if(item.id.videoId){
+    return item.id.videoId
+  }
+  return 'video not found'
+}
 // console.log(mockData);
 // console.log(decorateResponse(mockData));
 
@@ -51,35 +57,40 @@ const decorateResponse = function(response) {
 // 2. Using the object, return an HTML string containing all the expected data
 // TEST IT!
 const generateVideoItemHtml = function(video) {
-  return `
-    <li>
+  return `<li>
       <span>${video.id}</span>
       <span>${video.title}</span>
       <span>${video.thumbnail}</span>
-    </li>
-  `;
+    </li>`;
 };
 
 let videoResponse = decorateResponse(mockData);
-console.log(generateVideoItemHtml(videoResponse[0]));
 
 // TASK:
 // 1. Create a `addVideosToStore` function that receives an array of decorated video 
 // objects and sets the array as the value held in store.items
 // TEST IT!
 const addVideosToStore = function(videos) {
-
+  store.videos.push(videos)
 };
 
+addVideosToStore(videoResponse)
 // TASK:
 // 1. Create a `render` function
 // 2. Map through `store.videos`, sending each `video` through your `generateVideoItemHtml`
 // 3. Add your array of DOM elements to the appropriate DOM element
 // TEST IT!
 const render = function() {
-
+  const processedVid = store.videos.map( video => {
+    return generateVideoItemHtml(video)
+  })
+  console.log(processedVid)
+  console.log(store.videos)
+  $('.results').html(processedVid)
+  
 };
 
+render()
 // TASK:
 // 1. Create a `handleFormSubmit` function that adds an event listener to the form
 // 2. The listener should:
