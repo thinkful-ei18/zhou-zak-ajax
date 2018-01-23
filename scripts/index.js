@@ -15,13 +15,13 @@ const BASE_URL = 'https://www.googleapis.com/youtube/v3/search';
 // 2. Use `searchTerm` to construct the right query object based on the Youtube API docs
 // 3. Make a getJSON call using the query object and sending the provided callback in as the last argument
 // TEST IT! Execute this function and console log the results inside the callback.
-const fetchVideos = function(searchTerm, callback) {
+const fetchVideos = function(searchTerm,callback) {
   const query = {
     part: 'snippet',
     q: searchTerm,
     key: API_KEY 
   };
-  $.getJSON(BASE_URL, query, callback);
+  $.getJSON(BASE_URL, query,callback)
 };
 
 // TASK:
@@ -33,7 +33,15 @@ const fetchVideos = function(searchTerm, callback) {
 // TEST IT! Grab an example API response and send it into the function - make sure
 // you get back the object you want.
 const decorateResponse = function(response) {
-
+  const itemNeeded = response.items.map( item => {
+    return {
+      id: item.id,
+      title: item.snippet.title,
+      thumbnails: item.snippet.thumbnails
+    }
+  })
+  store.videos.push(itemNeeded)
+  console.log(store.videos)
 };
 
 // TASK:
