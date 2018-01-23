@@ -1,10 +1,12 @@
+'use strict';
+
 const store = function() {
-	let items = [];
-	const setVideo= function(garbage){
-		items = garbage
-	}
-	return{
-		items,
-		setVideo
-	}
+  let videos = [];
+  const setVideos = function(videos){
+    this.videos = videos;
+  };
+  return{
+    videos,
+    setVideos
+  };
 }();
