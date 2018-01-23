@@ -38,7 +38,7 @@ const decorateResponse = function(response) {
     return {
       id: item.id.videoId,
       title: item.snippet.title,
-      thumbnails: item.snippet.thumbnails.default.url
+      thumbnail: item.snippet.thumbnails.default.url
     };
   });
 };
@@ -51,8 +51,17 @@ const decorateResponse = function(response) {
 // 2. Using the object, return an HTML string containing all the expected data
 // TEST IT!
 const generateVideoItemHtml = function(video) {
-
+  return `
+    <li>
+      <span>${video.id}</span>
+      <span>${video.title}</span>
+      <span>${video.thumbnail}</span>
+    </li>
+  `;
 };
+
+let videoResponse = decorateResponse(mockData);
+console.log(generateVideoItemHtml(videoResponse[0]));
 
 // TASK:
 // 1. Create a `addVideosToStore` function that receives an array of decorated video 
